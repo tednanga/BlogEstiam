@@ -1,0 +1,13 @@
+{# src/Blogger/BlogBundle/Resources/views/Page/hello.html.twig #}
+{% extends 'BlogBundle::layout.html.twig' %}
+
+{% block blog_tagline %}
+    <h1>Hello</h1>
+    <a href="{{ path('hello', {'name': 'estiam'}) }}">Hello estiam</a>
+    -
+    <a href="{{ path('hello', {'name': 'paris'}) }}">Hello Paris</a>
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'hello'|trans({'%name%': name})}}</h1>
+{% endblock %}

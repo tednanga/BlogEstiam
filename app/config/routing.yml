@@ -2,3 +2,6 @@ blog:
     resource: "@BlogBundle/Controller/"
     type:     annotation
     prefix:   /
+
+logout:
+    path: "/logout"
