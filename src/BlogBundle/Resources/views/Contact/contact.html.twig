@@ -1,0 +1,9 @@
+{% extends 'BlogBundle::layout.html.twig' %}
+
+{% block blog_tagline %}<h1>Contact us!</h1>{% endblock %}
+
+{% block body %}
+    <div class="formBlog">
+        {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    </div>
+{% endblock %}

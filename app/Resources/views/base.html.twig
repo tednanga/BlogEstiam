@@ -8,6 +8,7 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     {% block stylesheets %}
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link href='http://fonts.googleapis.com/css?family=Irish+Grover' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=La+Belle+Aurore' rel='stylesheet' type='text/css'>
         <link href="{{ asset('css/screen.css') }}" type="text/css" rel="stylesheet" />
@@ -20,13 +21,27 @@
     <header id="header">
         <div class="top">
             {% block navigation %}
-                <nav>
-                    <ul class="navigation">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                      <ul class="navigation" class="nav navbar-nav">
+                        <li{{ app.request.get('_route') == 'BlogBundle_homepage' ? ' class="active"'}}><a href="{{ path('BlogBundle_homepage') }}">Homepage</a></li>
+                        <li{{ app.request.get('_route') == 'users' ? ' class="active"'}}><a href="{{ path('users') }}">Users</a></li>
+                        <li{{ app.request.get('_route') == 'hello' ? ' class="active"'}}><a href="{{ path('hello') }}">Hello</a></li>
+                        <li{{ app.request.get('_route') == 'contact' ? ' class="active"'}}><a href="{{ path('contact') }}">Contact us</a></li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li{{ app.request.get('_route') == 'contact_list' ? ' class="active"'}}><a href="{{ path('contact_list') }}">Contacts</a></li>
+                        {% endif %}
+                        {% if app.user %}
+                            <li{{ app.request.get('_route') == 'update_password' ? ' class="active"'}}><a href="{{ path('update_password') }}">Update password</a></li>
+                            <li><a href="{{ path('logout') }}">Logout ({{ app.user.fullname }})</a></li>
+                        {% else %}
+                            <li{{ app.request.get('_route') == 'register' ? ' class="active"'}}><a href="{{ path('register') }}">Register</a></li>
+                            <li{{ app.request.get('_route') == 'login' ? ' class="active"'}}><a href="{{ path('login') }}">Login</a></li>
+                        {% endif %}
+                      </ul>
+                    </div>
                 </nav>
+
             {% endblock %}
         </div>
 
