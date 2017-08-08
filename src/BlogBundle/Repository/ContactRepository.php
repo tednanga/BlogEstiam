@@ -1,6 +1,6 @@
 <?php
 
-namespace BloBundle\Repository;
+namespace BlogBundle\Repository;
 
 /**
  * ContactRepository

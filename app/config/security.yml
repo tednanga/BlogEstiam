@@ -35,8 +35,6 @@ security:
     access_control:
         - path: ^/$
           roles: IS_AUTHENTICATED_ANONYMOUSLY
-        - path: ^/$
-          roles: IS_AUTHENTICATED_ANONYMOUSLY
         - path: ^/login$
           roles: IS_AUTHENTICATED_ANONYMOUSLY
         - path: ^/register$
@@ -47,3 +45,5 @@ security:
           roles: IS_AUTHENTICATED_ANONYMOUSLY
         - path: ^/
           roles: ROLE_USER
+        - path: ^/admin
+          roles: ROLE_ADMIN

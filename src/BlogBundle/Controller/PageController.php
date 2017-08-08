@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use BlogBundle\Entity\BlogPost;
 
 
 class PageController extends Controller
@@ -21,9 +22,19 @@ class PageController extends Controller
      * @Route("/", name="BlogBundle_homepage")
      * @Method({"GET"})
      */
-    public function indexAction()
+    public function indexAction(BlogPost $blogposts)
     {
-        return $this->render('BlogBundle:Page:index.html.twig');
+        // Pour récupérer la liste de tous les articles : on utilise notre nouvelle méthode
+        $articles = $this->getDoctrine()
+            ->getManager()
+            ->getRepository( BlogPost::class)
+            ->findAll();
+
+        // L'appel de la vue ne change pas
+        return $this->render('BlogBundle:Page:index.html.twig', array(
+            'blogposts' => $blogposts
+        ));
+
     }
 
     /**
