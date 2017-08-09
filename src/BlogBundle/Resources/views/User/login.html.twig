@@ -1,0 +1,15 @@
+{% extends 'BlogBundle::layout.html.twig' %}
+
+{% block blog_tagline %}<h1>Login</h1>{% endblock %}
+
+{% block body %}
+    <div>
+        {% if error %}
+            <div class="alert alert-danger">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
+
+        {{ include('BlogBundle:User:_login.html.twig', {'last_username': last_username}, false) }}
+    </div>
+{% endblock %}

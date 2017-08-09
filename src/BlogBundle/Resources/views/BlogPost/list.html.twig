@@ -1,0 +1,54 @@
+{% extends 'BlogBundle::layout.html.twig' %}
+
+{% block blog_tagline %}
+    <h1>{{ 'blogpost.count'|transchoice(blogposts|length, {'%count%': blogposts|length}) }}</h1>
+{% endblock %}
+
+{% block body %}
+    <div class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li{{ app.request.get('filter', 'all') == 'all' ? ' class="active"'}}><a href="?filter=all">All</a></li>
+                <li{{ app.request.get('filter') == 'only_published' ? ' class="active"'}}><a href="?filter=only_published">Only published</a></li>
+                <li{{ app.request.get('filter') == 'only_not_published' ? ' class="active"'}}><a href="?filter=only_not_published">Only not published</a></li>
+            </ul>
+        </div>
+    </div>
+    <div>
+        {% if contacts|length > 0 %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{{ 'blogpost.title'}}</th>
+                    <th>{{ 'blogpost.author'}}</th>
+                    <th>{{ 'blogpost.created_at'}}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for blogpost in blogposts %}
+                    <tr>
+                        <td>{{ blogpost.title }}</td>
+                        <td>{{ blogpost.author }}</td>
+                        <td>{{ blogpost.created_at }}</td>
+                        <td>
+                            {% if blogpost.isPublished %}
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> on {{ blogpost.publishedAt|date }}
+                            {% else %}
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                            {% endif %}
+                        </td>
+                        <td><a class="btn btn-primary" href="{{ path('post_show', {'id': blogpost.id}) }}">View</a></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">No blog posts.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="alert alert-warning">No blog posts.</div>
+        {% endif %}
+    </div>
+{% endblock %}
