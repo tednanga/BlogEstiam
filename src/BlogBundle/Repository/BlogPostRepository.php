@@ -25,10 +25,10 @@ class BlogPostRepository extends \Doctrine\ORM\EntityRepository
             ->addOrderBy('blogpost.createdAt', 'DESC')
         ;
 
-        if ('only_processed' === $filter) {
+        if ('only_published' === $filter) {
             $qb->andWhere('blogpost.publishedAt IS NOT NULL');
         }
-        if ('only_not_processed' === $filter) {
+        if ('only_not_published' === $filter) {
             $qb->andWhere('blogpost.publishedAt IS NULL');
         }
 
@@ -36,6 +36,17 @@ class BlogPostRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+
+    // Depuis le repository BlogPost
+    public function getBlogPostWithComments()
+    {
+        $qb = $this->createQueryBuilder('blogpost')
+            ->leftJoin('blogpost.comments.', 'comments')
+            ->addSelect('c');
+
+        return $qb->getQuery()
+            ->getResult();
+    }
 
 
 

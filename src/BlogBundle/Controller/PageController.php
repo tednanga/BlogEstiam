@@ -22,10 +22,10 @@ class PageController extends Controller
      * @Route("/", name="BlogBundle_homepage")
      * @Method({"GET"})
      */
-    public function indexAction(BlogPost $blogposts)
+    public function indexAction()
     {
-        // Pour récupérer la liste de tous les articles : on utilise notre nouvelle méthode
-        $articles = $this->getDoctrine()
+        // Pour récupérer la liste de tous les blog posts : on utilise notre nouvelle méthode
+        $blogposts = $this->getDoctrine()
             ->getManager()
             ->getRepository( BlogPost::class)
             ->findAll();

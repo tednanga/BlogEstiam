@@ -2,7 +2,8 @@
 {% extends 'BlogBundle::layout.html.twig' %}
 
 
-{% block blog_tagline %}<h1>List of blog posts</h1>{% endblock %}
+{% block blog_tagline %}<h1>List of blog posts plushed </h1>{% endblock %}
+
 
 {% block body %}
 
@@ -18,21 +19,23 @@
             </thead>
             <tbody>
             {% for blogpost in blogposts %}
+              {% if blogpost.isPublished %}
                 <tr>
                     <td>{{ blogpost.title }}</td>
-                    <td>{{ blogpost.published_at }}</td>
-                    <td>{{ blogpost.conten | slice(0,100) }}</td>
-                    <td><a class="btn btn-primary" href="{{ path('BlogBundle:BlogPost:show.html.twig', {'id': contact.id}) }}">View</a></td>
+                    <td>{{ blogpost.publishedAt | date }}</td>
+                    <td>{{ blogpost.content | slice(0,100) }}</td>
+                    <td><a class="btn btn-primary" href="{{ path('user_post_show', {'id': blogpost.id}) }}">View</a></td>
                 </tr>
+              {% endif %}
             {% else %}
                 <tr>
-                    <td colspan="4">No contacts.</td>
+                    <td colspan="4">No blog posts.</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     {% else %}
-        <div class="alert alert-warning">No contacts.</div>
+        <div class="alert alert-warning">No blog posts.</div>
     {% endif %}
 
 {% endblock %}

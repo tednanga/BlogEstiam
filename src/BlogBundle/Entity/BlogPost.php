@@ -8,8 +8,11 @@
 
 namespace BlogBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use BlogBundle\Entity\User;
+use BlogBundle\Entity\Comment;
 /**
  * BlogPost
  *
@@ -64,6 +67,25 @@ class BlogPost
      * @ORM\Column(name="published_at", type="datetime", nullable=true)
      */
     private $publishedAt;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="BlogBundle\Entity\Comment", mappedBy="blogpost")
+     */
+    private $comments; // Ici commentaires prend un « s », car un article a plusieurs commentaires !
+
+    /**
+     * @var integer
+     * @ORM\Column(name="nbComments", type="integer")
+     */
+    private $nbComments;
+
+
+    public function __construct()
+    {
+
+        $this->comments = new ArrayCollection();
+    }
 
 
     public static function create()
@@ -214,6 +236,58 @@ class BlogPost
     public function isPublished()
     {
         return null !== $this->publishedAt;
+    }
+
+
+
+/**
+* @param Comment $comment
+* @return BlogPost
+*/
+    public function addComment(Comment $comment)
+    {
+        $this->comments[] = $comment;
+        $comment->setBlogPost($this); // On ajoute ceci
+        return $this;
+    }
+
+    /**
+     * @param Comment $comment
+     */
+    public function removeComment(Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+        // Et si notre relation était facultative (nullable=true, ce qui n'est pas notre cas ici attention) :
+        $comment->setBlogPost(null);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+
+    /**
+     * Get nbComments
+     *
+     * @return int
+     */
+    public function getNbComments()
+    {
+        return $this->nbComments;
+    }
+
+    /**
+     * Set nbComments
+     *
+     * @return int
+     */
+    public function setNbComments($nbComments)
+    {
+        return $this->nbComments = $nbComments;
     }
 
 

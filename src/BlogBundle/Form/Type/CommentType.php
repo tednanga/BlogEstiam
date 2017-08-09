@@ -10,22 +10,21 @@ namespace BlogBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
-class BlogPostType extends AbstractType
+class CommentType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class, [
+            ->add('author', TextareaType::class, [
                 'constraints' => [
                     new Assert\NotBlank(),
-                    new Assert\Length(['max' => 255]),
+                    new Assert\Length(['min' => 3, 'max' => 255]),
                 ]
             ])
             ->add('content', TextareaType::class, [
@@ -34,13 +33,7 @@ class BlogPostType extends AbstractType
                     new Assert\Length(['min' => 3, 'max' => 4000]),
                 ]
             ])
-            ->add('author', TextType::class, [
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length(['max' => 100]),
-                ]
-            ])
-            ->add('post', SubmitType::class)
+            ->add('Comment', SubmitType::class)
         ;
     }
 

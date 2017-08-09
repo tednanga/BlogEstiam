@@ -139,4 +139,24 @@ class Comment
         return $this->blogpost;
     }
 
+
+    /**
+     * @ORM\prePersist
+     */
+    public function increase()
+    {
+        $nbComments = $this->getBlogPost()->getNbComments();
+        $this->getBlogPost()->setNbComments($nbComments+1);
+    }
+
+    /**
+     * @ORM\preRemove
+     */
+    public function decrease()
+    {
+        $nbCommentaires = $this->getBlogPost()->getNbComments();
+        $this->getBlogPost()->setNbComments($nbComments-1);
+    }
+
+
 }

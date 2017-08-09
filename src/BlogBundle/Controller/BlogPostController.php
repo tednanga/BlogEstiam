@@ -79,7 +79,19 @@ class BlogPostController extends Controller
     public function showAction(Request $request, BlogPost $blogpost)
     {
         return $this->render('BlogBundle:BlogPost:show.html.twig', [
-            '$blogpost' => $blogpost,
+            'blogpost' => $blogpost,
+        ]);
+    }
+
+
+    /**
+     * @Route("/posts/{id}", name="user_post_show")
+     * @Method("GET")
+     */
+    public function user_showAction(Request $request, BlogPost $blogpost)
+    {
+        return $this->render('BlogBundle:BlogPost:user_show.html.twig', [
+            'blogpost' => $blogpost,
         ]);
     }
 
@@ -95,7 +107,7 @@ class BlogPostController extends Controller
         ]);
 
         $token = $request->query->get('token');
-        if (!$this->isCsrfTokenValid('contact_process.' . $blogpost->getId(), $token)) {
+        if (!$this->isCsrfTokenValid('post_publish.' . $blogpost->getId(), $token)) {
             $this->addFlash('error', 'CSRF token invalid.');
 
             return $response;
