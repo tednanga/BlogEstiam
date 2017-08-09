@@ -12,14 +12,12 @@
         <p class="bg-info">{{ blogpost.content|nl2br }}</p>
         <h3>Created at</h3>
         <p class="bg-info">{{ blogpost.createdAt|date }}</p>
+        h3>Published at</h3>
+        <p class="bg-info">{{ blogpost.publishedAt|date }}</p>
         <hr />
-        {% if blogpost.isPublished %}
-            <p>Published on {{ blogpost.publishedAt|date }}</p>
-        {% else %}
-            {% if else %}
+        {% if is_granted('ROLE_ADMIN') %}
             <a class="btn btn-primary" href="{{ path('post_publish', {'id': blogpost.id, 'token': csrf_token('post_publish.' ~ blogpost.id)}) }}">Mark as published</a>
-            {% endif %}
         {% endif %}
+
     </div>
 {% endblock %}
-

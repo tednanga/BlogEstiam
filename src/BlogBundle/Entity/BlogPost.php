@@ -75,7 +75,7 @@ class BlogPost
     {
         $blogpost = new self();
 
-        $blogpost->setAutor($user->getFullname());
+        $blogpost->setAuthor($user->getFullname());
 
         return $blogpost;
     }
