@@ -76,7 +76,7 @@ class BlogPost
 
     /**
      * @var integer
-     * @ORM\Column(name="nbComments", type="integer")
+     * @ORM\Column(name="nbComments", type="integer", nullable=true)
      */
     private $nbComments;
 

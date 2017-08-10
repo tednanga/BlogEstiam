@@ -12,12 +12,66 @@
         <p class="bg-info">{{ blogpost.content|nl2br }}</p>
         <h3>Created at</h3>
         <p class="bg-info">{{ blogpost.createdAt|date }}</p>
-        h3>Published at</h3>
-        <p class="bg-info">{{ blogpost.publishedAt|date }}</p>
+        <h3>published at</h3>
+        <p class="bg-info">{{ blogpost.createdAt|date }}</p>
         <hr />
-        {% if is_granted('ROLE_ADMIN') %}
-            <a class="btn btn-primary" href="{{ path('post_publish', {'id': blogpost.id, 'token': csrf_token('post_publish.' ~ blogpost.id)}) }}">Mark as published</a>
-        {% endif %}
-
     </div>
+
+    <!-- Begin fluid width widget -->
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-list-alt"></span>Recent comments
+            </h3>
+        </div>
+        <div class="panel-body">
+            {% if comments |length > 0 %}
+                <ul class="media-list">
+                    {% for comment in comments %}
+                        <li class="media">
+                            <div class="media-body">
+                                <h4 class="media-heading">
+                                    <a href="#" class="text-info">
+                                        {{ comment.author }}{% if is_granted('ROLE_ADMIN') %}
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                        {% endif %}
+                                    </a>
+                                </h4>
+                                <h4 class="media-heading">
+                                    <a href="#" class="text-info">
+                                        {{ comment.date|date}}
+                                    </a>
+                                </h4>
+                                <p class="margin-top-10 margin-bottom-20">
+                                    {{ comment.content }}
+                                </p>
+
+                            </div>
+                        </li>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">No comments.</td>
+                        </tr>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="alert alert-warning">No comments.</div>
+            {% endif %}
+        </div>
+    </div>
+    <!-- End fluid width widget -->
+
+
 {% endblock %}
+
+{% block sidebar %}
+
+    <div class="formBlog">
+        {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    </div>
+
+{% endblock %}
+
+
+
+

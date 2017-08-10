@@ -21,12 +21,6 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('author', TextareaType::class, [
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length(['min' => 3, 'max' => 255]),
-                ]
-            ])
             ->add('content', TextareaType::class, [
                 'constraints' => [
                     new Assert\NotBlank(),

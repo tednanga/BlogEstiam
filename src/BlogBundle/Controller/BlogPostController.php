@@ -16,7 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 use BlogBundle\Entity\BlogPost;
+use BlogBundle\Entity\Comment;
 use BlogBundle\Form\Type\BlogPostType;
+use BlogBundle\Form\Type\CommentType;
 use Doctrine\ORM\EntityManagerInterface;
 
 class BlogPostController extends Controller
@@ -66,6 +68,8 @@ class BlogPostController extends Controller
 
         $blogposts = $em->getRepository(BlogPost::class)->findForList($filter);
 
+
+
         return $this->render('BlogBundle:BlogPost:list.html.twig', [
             'blogposts' => $blogposts,
         ]);
@@ -86,12 +90,41 @@ class BlogPostController extends Controller
 
     /**
      * @Route("/posts/{id}", name="user_post_show")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
+     *
      */
-    public function user_showAction(Request $request, BlogPost $blogpost)
+    public function user_showAction(Request $request, BlogPost $blogpost, UserInterface $user = null)
     {
+
+        $comment = $user ? Comment::createFromUser($user) : Comment::create();
+
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setDate(new \DateTime());
+            $comment->setContent($form['content']->getData());
+            $comment->setBlogPost($blogpost);
+            $em = $this->getDoctrine()->getEntityManager();
+
+            $em->persist($comment);// prepare to insert into the database
+            $em->flush();// execute all SQL queries
+
+            $this->addFlash('success', 'Blog post commented!');
+            $blogpost->addComment($comment);
+           // $comment->increase();
+            dump($blogpost);die;
+        }
+
+        $comments=$blogpost->getComments();
+        $nbComments = $blogpost->getNbComments();
+
         return $this->render('BlogBundle:BlogPost:user_show.html.twig', [
             'blogpost' => $blogpost,
+            'comments' => $comments,
+            'nbComments' => $nbComments,
+            'form' => $form->createView(),
         ]);
     }
 

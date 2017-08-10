@@ -42,7 +42,7 @@ class BlogPostRepository extends \Doctrine\ORM\EntityRepository
     {
         $qb = $this->createQueryBuilder('blogpost')
             ->leftJoin('blogpost.comments.', 'comments')
-            ->addSelect('c');
+            ->addSelect('comments');
 
         return $qb->getQuery()
             ->getResult();
