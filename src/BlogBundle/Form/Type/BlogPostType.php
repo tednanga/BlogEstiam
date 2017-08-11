@@ -34,7 +34,7 @@ class BlogPostType extends AbstractType
                     new Assert\Length(['min' => 3, 'max' => 4000]),
                 ]
             ])
-            ->add('autor', TextType::class, [
+            ->add('author', TextType::class, [
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Length(['max' => 100]),

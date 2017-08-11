@@ -7,7 +7,7 @@
         <h3>Title</h3>
         <p class="bg-info">{{ blogpost.title }}</p>
         <h3>Autor</h3>
-        <p class="bg-info">{{ blogpost.autor }}</p>
+        <p class="bg-info">{{ blogpost.author }}</p>
         <h3>Content</h3>
         <p class="bg-info">{{ blogpost.content|nl2br }}</p>
         <h3>Created at</h3>
@@ -16,10 +16,9 @@
         {% if blogpost.isPublished %}
             <p>Published on {{ blogpost.publishedAt|date }}</p>
         {% else %}
-            {% if else %}
             <a class="btn btn-primary" href="{{ path('post_publish', {'id': blogpost.id, 'token': csrf_token('post_publish.' ~ blogpost.id)}) }}">Mark as published</a>
-            {% endif %}
         {% endif %}
     </div>
+
 {% endblock %}
 

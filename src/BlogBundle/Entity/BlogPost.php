@@ -8,8 +8,13 @@
 
 namespace BlogBundle\Entity;
 
+
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use BlogBundle\Entity\User;
+use BlogBundle\Entity\Comment;
+
 /**
  * BlogPost
  *
@@ -65,6 +70,24 @@ class BlogPost
      */
     private $publishedAt;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="BlogBundle\Entity\Comment", mappedBy="blogpost")
+     */
+    private $comments; // Ici commentaires prend un « s », car un article a plusieurs commentaires !
+
+    /**
+     * @var integer
+     * @ORM\Column(name="nbComments", type="integer", nullable=true)
+     */
+    private $nbComments;
+
+
+    public function __construct()
+    {
+
+        $this->comments = new ArrayCollection();
+    }
 
     public static function create()
     {
@@ -216,6 +239,35 @@ class BlogPost
         return null !== $this->publishedAt;
     }
 
+
+    /**
+     * @return Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+
+    /**
+     * Get nbComments
+     *
+     * @return int
+     */
+    public function getNbComments()
+    {
+        return $this->nbComments;
+    }
+
+    /**
+     * Set nbComments
+     *
+     * @return int
+     */
+    public function setNbComments($nbComments)
+    {
+        return $this->nbComments = $nbComments;
+    }
 
 
 }

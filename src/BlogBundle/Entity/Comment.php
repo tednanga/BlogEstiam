@@ -17,6 +17,7 @@ use BlogBundle\Entity\BlogPost;
  *
  * @ORM\Table(name="comment")
  * @ORM\Entity(repositoryClass="BlogBundle\Repository\CommentRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Comment
 {
@@ -56,6 +57,21 @@ class Comment
     public function __construct()
     {
         $this->date = new \Datetime();
+    }
+
+
+    public static function create()
+    {
+        return new self();
+    }
+
+    public static function createFromUser(User $user)
+    {
+        $comment = new self();
+
+        $comment->setAuthor($user->getFullname());
+
+        return $comment;
     }
 
     /**
@@ -137,6 +153,25 @@ class Comment
     public function getBlogPost()
     {
         return $this->blogpost;
+    }
+
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function increase()
+    {
+        $nbComments = $this->getBlogPost()->getNbComments();
+        $this->getBlogPost()->setNbComments($nbComments+1);
+    }
+
+    /**
+     * @ORM\PreRemove
+     */
+    public function decrease()
+    {
+        $nbComments = $this->getBlogPost()->getNbComments();
+        $this->getBlogPost()->setNbComments($nbComments-1);
     }
 
 }
