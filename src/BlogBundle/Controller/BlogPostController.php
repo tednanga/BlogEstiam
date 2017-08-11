@@ -112,9 +112,6 @@ class BlogPostController extends Controller
             $em->flush();// execute all SQL queries
 
             $this->addFlash('success', 'Blog post commented!');
-            $blogpost->addComment($comment);
-           // $comment->increase();
-            dump($blogpost);die;
         }
 
         $comments=$blogpost->getComments();
@@ -159,6 +156,33 @@ class BlogPostController extends Controller
         $this->addFlash('success', 'Blog post sucessfully published.');
 
         return $response;
+    }
+
+
+    /**
+     * @Route("/comment/{id}", name="remove_comment")
+     * @Security("is_granted('ROLE_ADMIN')")
+     * @Method({"GET"})
+     */
+    public function remove_commentAction(Request $request, Comment $comment, EntityManagerInterface $em)
+    {
+        $response = $this->redirectToRoute('user_post_show', [
+            'id' => $comment->getBlogPost()->getId()
+        ]);
+
+        $token = $request->query->get('token');
+        if (!$this->isCsrfTokenValid('remove_comment.' . $comment->getBlogPost()->getId(), $token)) {
+            $this->addFlash('error', 'CSRF token invalid.');
+
+            return $response;
+        }
+
+
+        $em->remove($comment);
+        $em->flush();
+        $this->addFlash('success', 'Comment sucessfully removed.');
+        return $response;
+
     }
 
 }

@@ -239,28 +239,6 @@ class BlogPost
     }
 
 
-
-/**
-* @param Comment $comment
-* @return BlogPost
-*/
-    public function addComment(Comment $comment)
-    {
-        $this->comments[] = $comment;
-        $comment->setBlogPost($this); // On ajoute ceci
-        return $this;
-    }
-
-    /**
-     * @param Comment $comment
-     */
-    public function removeComment(Comment $comment)
-    {
-        $this->comments->removeElement($comment);
-        // Et si notre relation était facultative (nullable=true, ce qui n'est pas notre cas ici attention) :
-        $comment->setBlogPost(null);
-    }
-
     /**
      * @return Collection
      */

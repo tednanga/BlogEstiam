@@ -31,16 +31,17 @@
                         <li class="media">
                             <div class="media-body">
                                 <h4 class="media-heading">
-                                    <a href="#" class="text-info">
-                                        {{ comment.author }}{% if is_granted('ROLE_ADMIN') %}
-                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                        {% endif %}
-                                    </a>
+                                    <span class="text-info">
+                                        {{ comment.author }}
+                                    </span>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <a class="glyphicon glyphicon-trash" href="{{ path('remove_comment', {'id': comment.id, 'token': csrf_token('remove_comment.' ~ comment.getBlogPost().getId())}) }}">Remove</a>
+                                    {% endif %}
                                 </h4>
                                 <h4 class="media-heading">
-                                    <a href="#" class="text-info">
+                                    <span class="text-info">
                                         {{ comment.date|date}}
-                                    </a>
+                                    </span>
                                 </h4>
                                 <p class="margin-top-10 margin-bottom-20">
                                     {{ comment.content }}
