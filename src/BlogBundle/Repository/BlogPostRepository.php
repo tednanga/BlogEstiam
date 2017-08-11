@@ -36,7 +36,6 @@ class BlogPostRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-
     // Depuis le repository BlogPost
     public function getBlogPostWithComments()
     {
@@ -47,7 +46,6 @@ class BlogPostRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()
             ->getResult();
     }
-
 
 
 

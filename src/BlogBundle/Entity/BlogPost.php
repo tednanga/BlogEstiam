@@ -8,11 +8,13 @@
 
 namespace BlogBundle\Entity;
 
+
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use BlogBundle\Entity\User;
 use BlogBundle\Entity\Comment;
+
 /**
  * BlogPost
  *
@@ -86,7 +88,6 @@ class BlogPost
 
         $this->comments = new ArrayCollection();
     }
-
 
     public static function create()
     {
@@ -267,7 +268,6 @@ class BlogPost
     {
         return $this->nbComments = $nbComments;
     }
-
 
 
 }

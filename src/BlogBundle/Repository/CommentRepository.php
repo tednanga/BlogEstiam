@@ -9,6 +9,7 @@
 namespace BlogBundle\Repository;
 
 
+
 class CommentRepository extends \Doctrine\ORM\EntityRepository
 {
 
