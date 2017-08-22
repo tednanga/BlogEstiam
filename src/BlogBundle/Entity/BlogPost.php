@@ -8,6 +8,7 @@
 
 namespace BlogBundle\Entity;
 
+
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -15,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 use BlogBundle\Entity\User;
 use BlogBundle\Entity\Comment;
 use BlogBundle\Entity\Image;
+
 
 /**
  * BlogPost
@@ -96,7 +98,6 @@ class BlogPost
 
         $this->comments = new ArrayCollection();
     }
-
 
     public static function create()
     {
@@ -279,6 +280,7 @@ class BlogPost
     }
 
 
+<<<<<<< HEAD
 
     /**
      * @param  Image $image
@@ -300,4 +302,6 @@ class BlogPost
 
 
 
+=======
+>>>>>>> 9e36132c91ac8049c99dad4bd507112a4153a886
 }

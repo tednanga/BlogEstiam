@@ -174,5 +174,4 @@ class Comment
         $this->getBlogPost()->setNbComments($nbComments-1);
     }
 
-
 }
