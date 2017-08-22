@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #Cache, session files and logs (Symfony3)
 /var/cache/*
 /var/logs/*
@@ -5,3 +6,6 @@
 !var/cache/.gitkeep
 !var/logs/.gitkeep
 !var/sessions/.gitkeep
+=======
+/var/*
+>>>>>>> c5ddd2d2d7ae5f8ecfa30b8484bf03ea8946689e
