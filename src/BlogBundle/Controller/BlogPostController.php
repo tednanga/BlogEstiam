@@ -15,9 +15,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
+use BlogBundle\Entity\Image;
 use BlogBundle\Entity\BlogPost;
 use BlogBundle\Entity\Comment;
 use BlogBundle\Form\Type\BlogPostType;
+use BlogBundle\Form\Type\ImageType;
 use BlogBundle\Form\Type\CommentType;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -32,6 +34,7 @@ class BlogPostController extends Controller
     public function createAction(Request $request, UserInterface $user = null)
     {
         $blogpost = $user ? BlogPost::createFromUser($user) : BlogPost::create();
+        $image = Image::create();
 
         $form = $this->createForm(BlogPostType::class, $blogpost);
 
@@ -39,9 +42,8 @@ class BlogPostController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $blogpost->setCreatedAt(new \DateTime());
-
+            $blogpost->getImage()->upload();
             $em = $this->getDoctrine()->getEntityManager();
-
             $em->persist($blogpost);// prepare to insert into the database
             $em->flush();// execute all SQL queries
 

@@ -10,9 +10,12 @@ namespace BlogBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use BlogBundle\Entity\User;
 use BlogBundle\Entity\Comment;
+use BlogBundle\Entity\Image;
+
 /**
  * BlogPost
  *
@@ -79,6 +82,13 @@ class BlogPost
      * @ORM\Column(name="nbComments", type="integer", nullable=true)
      */
     private $nbComments;
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="BlogBundle\Entity\Image", cascade={"persist", "remove"})
+     * @Assert\Valid()
+     */
+    private $image;
 
 
     public function __construct()
@@ -266,6 +276,26 @@ class BlogPost
     public function setNbComments($nbComments)
     {
         return $this->nbComments = $nbComments;
+    }
+
+
+
+    /**
+     * @param  Image $image
+     * @return BlogPost
+     */
+    public function setImage(Image $image = null)
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * @return Image
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 
 

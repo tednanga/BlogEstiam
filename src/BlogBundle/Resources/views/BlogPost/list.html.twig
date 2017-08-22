@@ -1,6 +1,7 @@
 {% extends 'BlogBundle::layout.html.twig' %}
 
 {% block blog_tagline %}
+
     <h1>Blog posts number: {{ blogposts|length }}</h1>
 {% endblock %}
 
@@ -15,6 +16,7 @@
         </div>
     </div>
     <div>
+
         {% if blogposts|length > 0 %}
             <table class="table">
                 <thead>
@@ -30,6 +32,7 @@
                     <tr>
                         <td>{{ blogpost.title }}</td>
                         <td>{{ blogpost.author }}</td>
+
                         <td>{{ blogpost.createdAt|date}}</td>
                         <td>
                             {% if blogpost.isPublished %}
