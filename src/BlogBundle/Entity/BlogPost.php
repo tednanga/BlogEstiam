@@ -279,9 +279,6 @@ class BlogPost
         return $this->nbComments = $nbComments;
     }
 
-
-<<<<<<< HEAD
-
     /**
      * @param  Image $image
      * @return BlogPost
@@ -301,7 +298,4 @@ class BlogPost
     }
 
 
-
-=======
->>>>>>> 9e36132c91ac8049c99dad4bd507112a4153a886
 }
